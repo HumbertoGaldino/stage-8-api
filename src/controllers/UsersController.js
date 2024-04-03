@@ -1,3 +1,5 @@
+const AppError = require("../Utils/AppError");
+
 class UsersController {
   /** No máximo 5 métodos, caso precise de mais, criar um novo controller
    * index - GET para listar vários registros
@@ -10,7 +12,11 @@ class UsersController {
   create(req, res) {
     const { name, email, password } = req.body;
 
-    res.json({ name, email, password });
+    if (!name) {
+      throw new AppError("Nome é obrigatório!");
+    }
+
+    res.status(201).json({ name, email, password });
   }
 }
 
