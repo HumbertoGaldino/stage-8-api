@@ -1,9 +1,7 @@
 require("express-async-errors");
-
+const migrationsRun = require("./database/migrations");
 const AppError = require("./Utils/AppError");
-
 const express = require("express");
-
 const routes = require("./routes");
 
 const app = express();
@@ -11,6 +9,8 @@ const app = express();
 app.use(express.json());
 
 app.use(routes);
+
+migrationsRun();
 
 app.use((error, req, res, next) => {
   if (error instanceof AppError) {
